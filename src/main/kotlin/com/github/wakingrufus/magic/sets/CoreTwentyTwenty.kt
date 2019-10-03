@@ -14,5 +14,8 @@ object Core2020 : SetBuilder("Core Set 2020") {
         }
     }
     val Plains = reprint(BasicLands.Plains, "image")
+    val Island = reprint(BasicLands.Island, "image")
+    val Swamp = reprint(BasicLands.Swamp, "image")
+    val Mountain = reprint(BasicLands.Mountain, "image")
     val Forest = reprint(BasicLands.Forest, "image")
 }

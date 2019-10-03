@@ -3,7 +3,6 @@ package com.github.wakingrufus.magic.card
 import com.github.wakingrufus.magic.Mana
 import com.github.wakingrufus.magic.ManaCost
 import com.github.wakingrufus.magic.ManaPaymentMethod
-import com.github.wakingrufus.magic.StandardMana
 
 enum class CardType {
     INSTANT, SORCERY, CREATURE, LAND, PLANESWALKER
@@ -54,7 +53,7 @@ class CardBuilder(val name: String) {
     fun land(mana: List<Mana>) {
         spellBuilder.apply {
             land {
-                manaAbility(mana = mana.map { StandardMana(it) })
+                manaAbility(mana = mana)
             }
         }
     }

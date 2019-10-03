@@ -15,6 +15,15 @@ fun addMana(mana: Mana): Effect {
     }
 }
 
+fun addMana(mana: List<Mana>): Effect {
+    return Effect(false) { player, gameState ->
+        gameStateLogger.debug { "adding ${mana.joinToString("")} to mana pool for player ${player.name}" }
+        mana.fold(gameState) { gs, m ->
+            gs.addMana(player, m)
+        }
+    }
+}
+
 fun putIntoPlay(permanent: Permanent): Effect {
     return Effect(false) { player, gameState ->
         gameState.putIntoPlay(player, player, permanent, null, false)

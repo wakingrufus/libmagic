@@ -1,8 +1,7 @@
 package com.github.wakingrufus.magic.card
 
-import com.github.wakingrufus.magic.ActivatedAbilityBuilder
+import com.github.wakingrufus.magic.Mana
 import com.github.wakingrufus.magic.Player
-import com.github.wakingrufus.magic.StandardMana
 import com.github.wakingrufus.magic.state.StackEffect
 import com.github.wakingrufus.magic.state.StateCard
 
@@ -48,17 +47,18 @@ class CreatureSpellBuilder {
 }
 
 class LandSpellBuilder {
-    private val manaAbilities: MutableList<List<StandardMana>> = mutableListOf()
+    private val manaAbilities: MutableList<List<Mana>> = mutableListOf()
     private val permanentBuilder: PermanentBuilder = PermanentBuilder()
-    fun manaAbility(mana: List<StandardMana>) {
+    fun manaAbility(mana: List<Mana>) {
         manaAbilities.add(mana)
     }
 
     fun build(image: String): Effect {
         return putIntoPlay(permanentBuilder.apply {
-            activatedAbility(){
-                addMana()
+            manaAbilities.forEach {
+                activatedAbility(ability = addMana(it))
             }
+
         }.build(image))
     }
 }

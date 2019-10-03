@@ -15,8 +15,10 @@ open class SetBuilder(val name: String, val cards: MutableList<Card> = mutableLi
         cards.add(card)
     }
 
-    fun reprint(card: Card, image: String) {
-        cards.add(card.copy(image = image))
+    fun reprint(card: Card, image: String): Card {
+        return card.copy(image = image).also {
+            this@SetBuilder.cards.add(it)
+        }
     }
 
     fun card(name: String, image: String, card: CardBuilder.() -> Unit): Card {

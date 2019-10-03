@@ -16,6 +16,8 @@ data class PlayerState(
         val exile: List<StateCard> = listOf(),
         val battlefield: List<PermanentState> = listOf(),
         val manaPool: ManaPool = ManaPool()) {
+    companion object : KLogging()
+
     fun startGame(deck: Deck): PlayerState = this.copy(library = deck.cards.shuffled().map { StateCard(card = it, owner = player) })
     fun addMana(mana: Mana): PlayerState {
         return this.copy(manaPool = this.manaPool.addMana(mana))
@@ -31,6 +33,11 @@ data class PlayerState(
 
     fun play(stateCard: StateCard): PlayerState {
         return this.copy(hand = hand.minus(stateCard))
+    }
+
+    fun draw(quantity: Int): PlayerState {
+        logger.debug { "player ${player.name} drawing $quantity cards" }
+        return this.copy(hand = hand.plus(library.take(quantity)), library = library.drop(quantity))
     }
 
 }
@@ -80,7 +87,7 @@ data class GameState(val players: List<Pair<Player, Deck>>,
         return this.copy(stack = this.stack.plus(stackEffect))
     }
 
-    private fun applyToPlayer(player: Player, transform: (PlayerState) -> PlayerState): GameState {
+    fun applyToPlayer(player: Player, transform: (PlayerState) -> PlayerState): GameState {
         return this.copy(playerStateMap = playerStateMap.mapValues { if (it.key == player) transform(it.value) else it.value })
     }
 

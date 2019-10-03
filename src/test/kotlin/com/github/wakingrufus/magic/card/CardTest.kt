@@ -4,9 +4,9 @@ import com.github.wakingrufus.magic.AnyMana
 import com.github.wakingrufus.magic.Mana
 import com.github.wakingrufus.magic.ManaCost
 import com.github.wakingrufus.magic.StandardMana
+import com.github.wakingrufus.magic.sets.basicLand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
 
 internal class CardTest {
     @Test
